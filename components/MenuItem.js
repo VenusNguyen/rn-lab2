@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { StyleSheet, Text, View, Button, Image, TextInput } from "react-native";
 
 function MenuItem(props) {
   // Keep track of quantity
   const [quantity, setQuantity] = useState(0);
   // TODO (part 3): add state for special instructions text
+  const [instruction, setInstructions] = useState("");
+  //create a reference
+  const textInputRef = useRef(null);
 
   // Return JSX to render
   return (
     <View style={styles.container}>
       <View style={styles.photoContainer}>
         <Image
-          source={require("../assets/placeholder-image.png")}
+          source={props.imageSource}
           style={styles.photo}
         />
       </View>
-      <Text style={{ fontWeight: "bold" }}>{"FOOD NAME"}</Text>
-      <Text>Price: ${1000}</Text>
+      <Text style={{ fontWeight: "bold" }}>{props.name}</Text>
+      <Text>Price: ${props.price}</Text>
       <Text>Quantity: {quantity}</Text>
       <View style={styles.buttonsContainer}>
         <Button
@@ -25,6 +28,8 @@ function MenuItem(props) {
             console.log("minus pressed");
             // TODO (part 2): decrease quantity by 1
             // watch out for negative quantity
+            if (quantity > 0)
+              setQuantity(quantity-1);
           }}
         />
         <Button
@@ -32,16 +37,20 @@ function MenuItem(props) {
           onPress={() => {
             console.log("plus pressed");
             // TODO (part 2): increase quantity by 1
+            setQuantity(quantity+1);
           }}
         />
       </View>
-      <Text>Special Instructions: {null}</Text>
+      <Text>Special Instructions: {instruction}</Text>
       <TextInput
         placeholder="Type instructions here"
+        ref = {textInputRef}
         onSubmitEditing={({ nativeEvent }) => {
           console.log(nativeEvent.text);
           // TODO (part 3): Update special instructions text
-          nativeEvent.target.clear();
+          setInstructions(nativeEvent.text);
+          // nativeEvent.target.clear();
+          textInputRef.current.clear();
         }}
       />
     </View>
@@ -53,13 +62,13 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    rowGap: "10px",
+    // rowGap: "10",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
     borderStyle: "solid",
-    borderWidth: "2px",
-    width: "90%",
+    borderWidth: 2,
+    // width: "90%",
     padding: 30,
     margin: 20,
   },
@@ -67,8 +76,9 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   photo: {
-    resizeMode: "contain",
-    width: "75%",
+    // resizeMode: "contain",
+    width: 100,
+    height: 100,
     padding: 50,
   },
   buttonsContainer: {

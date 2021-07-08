@@ -8,9 +8,9 @@ export default function App() {
     <View style={styles.container}>
       <Text style={{ fontSize: 30 }}>Snap Eating Account</Text>
       {/* TODO (part 1): update these props with your favorite food item */}
-      <MenuItem name={null} price={null} imageSource={null} />
+      <MenuItem name={"Curry"} price={20} imageSource={require("./assets/vietnamese-chicken-curry.jpeg")} />
       {/* TODO (part 2): add another MenuItem! */}
-      <StatusBar style="auto" />
+      <MenuItem name={"Curry"} price={"20"} imageSource={require("./assets/vietnamese-chicken-curry.jpeg")} />
     </View>
   );
 }
@@ -21,5 +21,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 50,
   },
 });
